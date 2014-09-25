@@ -4,10 +4,9 @@
 	#puts file_name;
 	file = File.open(file_name)
 	f = File.new("output.txt", "w") 
-	file.each {|line| 
+	file.each {|line|
 		new_str = line.sub( %r{\w+(\.\w+)+}, '<a href="\0">\0</a>' )
-		f.write(new_str);
-		#print new_str
+		f.write($new_str);
 	}
 	file.close
 	f.close;

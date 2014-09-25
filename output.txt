@@ -1,5 +1,5 @@
 text
 file
-multiline 
-<a href="a.com">a.com</a>
-<a href="a.b.classify">a.b.classify</a> 
+multiline <a href="a.b.com">.com</a>
+<a href="a.com">.com</a>
+<a href="a.b.classify">.classify</a> 

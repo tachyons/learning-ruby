@@ -1,0 +1,227 @@
+
+
+-------- Grammar --------
+
+rule 1 target: exp
+rule 2 target: 
+rule 3 exp: exp "+" exp
+rule 4 exp: exp "-" exp
+rule 5 exp: exp "*" exp
+rule 6 exp: exp "/" exp
+rule 7 exp: "(" exp ")"
+rule 8 exp: "-" NUMBER
+rule 9 exp: NUMBER
+
+------- Symbols -------
+
+**Nonterminals, with rules where they appear
+
+  $start (10)
+    on right: 
+    on left : 
+  target (11)
+    on right: 
+    on left : 1 2
+  exp (12)
+    on right: 1 3 4 5 6 7
+    on left : 3 4 5 6 7 8 9
+
+**Terminals, with rules where they appear
+
+  $end (0) 
+  error (1) 
+  UMINUS (2) 
+  "*" (3) 5
+  "/" (4) 6
+  "+" (5) 3
+  "-" (6) 4 8
+  "(" (7) 7
+  ")" (8) 7
+  NUMBER (9) 8 9
+
+--------- State ---------
+
+state 0
+
+
+  "-"           shift, and go to state 4
+  "("           shift, and go to state 3
+  NUMBER        shift, and go to state 5
+  $default      reduce using rule 2 (target)
+
+  target        go to state 1
+  exp           go to state 2
+
+state 1
+
+
+  $end          shift, and go to state 6
+
+
+state 2
+
+   1) target : exp _
+   3) exp : exp _ "+" exp
+   4) exp : exp _ "-" exp
+   5) exp : exp _ "*" exp
+   6) exp : exp _ "/" exp
+
+  "*"           shift, and go to state 9
+  "/"           shift, and go to state 10
+  "+"           shift, and go to state 7
+  "-"           shift, and go to state 8
+  $default      reduce using rule 1 (target)
+
+
+state 3
+
+   7) exp : "(" _ exp ")"
+
+  "-"           shift, and go to state 4
+  "("           shift, and go to state 3
+  NUMBER        shift, and go to state 5
+
+  exp           go to state 11
+
+state 4
+
+   8) exp : "-" _ NUMBER
+
+  NUMBER        shift, and go to state 12
+
+
+state 5
+
+   9) exp : NUMBER _
+
+  $default      reduce using rule 9 (exp)
+
+
+state 6
+
+
+  $end          shift, and go to state 13
+
+
+state 7
+
+   3) exp : exp "+" _ exp
+
+  "-"           shift, and go to state 4
+  "("           shift, and go to state 3
+  NUMBER        shift, and go to state 5
+
+  exp           go to state 14
+
+state 8
+
+   4) exp : exp "-" _ exp
+
+  "-"           shift, and go to state 4
+  "("           shift, and go to state 3
+  NUMBER        shift, and go to state 5
+
+  exp           go to state 15
+
+state 9
+
+   5) exp : exp "*" _ exp
+
+  "-"           shift, and go to state 4
+  "("           shift, and go to state 3
+  NUMBER        shift, and go to state 5
+
+  exp           go to state 16
+
+state 10
+
+   6) exp : exp "/" _ exp
+
+  "-"           shift, and go to state 4
+  "("           shift, and go to state 3
+  NUMBER        shift, and go to state 5
+
+  exp           go to state 17
+
+state 11
+
+   3) exp : exp _ "+" exp
+   4) exp : exp _ "-" exp
+   5) exp : exp _ "*" exp
+   6) exp : exp _ "/" exp
+   7) exp : "(" exp _ ")"
+
+  "*"           shift, and go to state 9
+  "/"           shift, and go to state 10
+  "+"           shift, and go to state 7
+  "-"           shift, and go to state 8
+  ")"           shift, and go to state 18
+
+
+state 12
+
+   8) exp : "-" NUMBER _
+
+  $default      reduce using rule 8 (exp)
+
+
+state 13
+
+
+  $default      accept
+
+
+state 14
+
+   3) exp : exp _ "+" exp
+   3) exp : exp "+" exp _
+   4) exp : exp _ "-" exp
+   5) exp : exp _ "*" exp
+   6) exp : exp _ "/" exp
+
+  "*"           shift, and go to state 9
+  "/"           shift, and go to state 10
+  $default      reduce using rule 3 (exp)
+
+
+state 15
+
+   3) exp : exp _ "+" exp
+   4) exp : exp _ "-" exp
+   4) exp : exp "-" exp _
+   5) exp : exp _ "*" exp
+   6) exp : exp _ "/" exp
+
+  "*"           shift, and go to state 9
+  "/"           shift, and go to state 10
+  $default      reduce using rule 4 (exp)
+
+
+state 16
+
+   3) exp : exp _ "+" exp
+   4) exp : exp _ "-" exp
+   5) exp : exp _ "*" exp
+   5) exp : exp "*" exp _
+   6) exp : exp _ "/" exp
+
+  $default      reduce using rule 5 (exp)
+
+
+state 17
+
+   3) exp : exp _ "+" exp
+   4) exp : exp _ "-" exp
+   5) exp : exp _ "*" exp
+   6) exp : exp _ "/" exp
+   6) exp : exp "/" exp _
+
+  $default      reduce using rule 6 (exp)
+
+
+state 18
+
+   7) exp : "(" exp ")" _
+
+  $default      reduce using rule 7 (exp)
+
